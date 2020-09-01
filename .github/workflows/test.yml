@@ -8,13 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Prepare variables
+      - name: Prepare variables & Run Scan
         id: vars
         shell: bash
         run: |
           echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
           echo "::set-output name=sha_short::$(git rev-parse HEAD)"
-      - name: Run Scan
-        run: |
           docker pull mixeway/scanner:latest
           docker run -e MODE=STANDALONE -e OSS_USERNAME=${{ secrets.oss_username }} -e OSS_KEY=${{ secrets.oss_key }} -e COMMIT_ID={{ steps.vars.outputs.sha_short }} -e BRANCH=${{ steps.vars.outputs.branch }} -e MIXEWAY_PROJECT_NAME=${{ github.event.repository.name }} -e MIXEWAY_KEy={{ secrets.mixeway_key }} -v $PWD:/opt/sources mixeway/scanner:latest
+
