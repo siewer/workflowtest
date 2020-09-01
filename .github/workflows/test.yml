@@ -20,4 +20,4 @@ jobs:
           echo "Branch: ${{ steps.vars.outputs.branch }}"
           echo "Sha: ${{ steps.vars.outputs.sha_short }}"
           echo "Name: ${{ github.event.repository.name }}"
-          docker run -e MODE=STANDALONE -e OSS_USERNAME=${{ secret.oss_username }} -e OSS_KEY=${{ secret.oss_key }} -v $PWD:/opt/sources mixeway/scanner:latest
+          docker run -e MODE=STANDALONE -e OSS_USERNAME=${{ secrets.oss_username }} -e OSS_KEY=${{ secrets.oss_key }} -v $PWD:/opt/sources mixeway/scanner:latest
