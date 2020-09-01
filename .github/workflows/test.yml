@@ -14,9 +14,8 @@ jobs:
         run: |
           echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
           echo "::set-output name=sha_short::$(git rev-parse HEAD)"
-          echo "::set-env name=project_name::${GITHUB_REPOSITORY#*/}-${GITHUB_SHA:0:7}"
       - name: Another step
         run: |
           echo "Branch: ${{ steps.vars.outputs.branch }}"
           echo "Sha: ${{ steps.vars.outputs.sha_short }}"
-          echo "Name: ${{ steps.vars.outputs.project_name }}"
+          echo "Name: ${{ github.event.repository.name }}"
