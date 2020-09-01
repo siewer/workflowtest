@@ -17,7 +17,4 @@ jobs:
       - name: Run Scan
         run: |
           docker pull mixeway/scanner:latest
-          echo "Branch: ${{ steps.vars.outputs.branch }}"
-          echo "Sha: ${{ steps.vars.outputs.sha_short }}"
-          echo "Name: ${{ github.event.repository.name }}"
-          docker run -e MODE=STANDALONE -e OSS_USERNAME=${{ secrets.oss_username }} -e OSS_KEY=${{ secrets.oss_key }} -v $PWD:/opt/sources mixeway/scanner:latest
+          docker run -e MODE=STANDALONE -e OSS_USERNAME=${{ secrets.oss_username }} -e OSS_KEY=${{ secrets.oss_key }} -e COMMIT_ID={{ steps.vars.outputs.sha_short }} -e BRANCH=${{ steps.vars.outputs.branch }} -e MIXEWAY_PROJECT_NAME=${{ github.event.repository.name }} -e MIXEWAY_KEy={{ secrets.mixeway_key }} -v $PWD:/opt/sources mixeway/scanner:latest
