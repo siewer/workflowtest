@@ -4,17 +4,16 @@ on: push
 
 jobs:
   my-job:
-    uses: actions/checkout@v1
     name: More Testing
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v1
       - name: Declare some variables
         id: vars
         shell: bash
         run: |
           echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
           echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
-
       - name: Another step
         run: |
           echo "Branch: ${{ steps.vars.outputs.branch }}"
