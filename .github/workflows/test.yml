@@ -4,7 +4,7 @@ on: push
 
 jobs:
   my-job:
-    name: More Testing
+    name: Mixeway Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -19,3 +19,4 @@ jobs:
           echo "Branch: ${{ steps.vars.outputs.branch }}"
           echo "Sha: ${{ steps.vars.outputs.sha_short }}"
           echo "Name: ${{ github.event.repository.name }}"
+          docker container ls
