@@ -1,17 +1,20 @@
-name: Greeting from Mona
+name: Testing
 
 on: push
 
 jobs:
   my-job:
-    name: My Job
+    name: More Testing
     runs-on: ubuntu-latest
     steps:
-      - name: Print a greeting
-        env:
-          MY_VAR: Hi there! My name is
-          FIRST_NAME: Mona
-          MIDDLE_NAME: The
-          LAST_NAME: Octocat
+      - name: Declare some variables
+        id: vars
+        shell: bash
         run: |
-          ls -la
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+          echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
+      - name: Another step
+        run: |
+          echo "Branch: ${{ steps.vars.outputs.branch }}"
+          echo "Sha: ${{ steps.vars.outputs.sha_short }}"
