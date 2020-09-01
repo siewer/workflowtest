@@ -3,7 +3,7 @@ name: Mixeway Scanner SAST
 on: push
 
 jobs:
-  my-job:
+  mixeway-scan:
     name: SAST test
     runs-on: ubuntu-latest
     steps:
