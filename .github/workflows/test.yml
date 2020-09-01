@@ -4,7 +4,7 @@ on: push
 
 jobs:
   mixeway-scan:
-    name: SAST test
+    name: SAST testing
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
