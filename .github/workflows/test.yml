@@ -1,22 +1,23 @@
-name: Testing
+name: Mixeway Scanner SAST
 
 on: push
 
 jobs:
   my-job:
-    name: Mixeway Test
+    name: SAST test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Declare some variables
+      - name: Prepare variables
         id: vars
         shell: bash
         run: |
           echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
           echo "::set-output name=sha_short::$(git rev-parse HEAD)"
-      - name: Another step
+      - name: Run Scan
         run: |
+          docker pull mixeway/scanner:latest
           echo "Branch: ${{ steps.vars.outputs.branch }}"
           echo "Sha: ${{ steps.vars.outputs.sha_short }}"
           echo "Name: ${{ github.event.repository.name }}"
-          docker container ls
+          docker run -e MODE=STANDALONE -e OSS_USERNAME=${{ secret.oss_username }} -e OSS_KEY=${{ secret.oss_key }} -v $PWD:/opt/sources mixeway/scanner:latest
