@@ -16,7 +16,7 @@ jobs:
           echo "::set-output name=sha_short::$(git rev-parse HEAD)"
       - name: Prepare Mixeway docker image
         run: |
-          docker pull mixeway/scanner:latest
+          docker pull mixeway/scanner:0.9.0-beta
       - name: Run Scan
         run: |
           docker run -e MODE=STANDALONE -e OSS_USERNAME=${{ secrets.oss_username }} -e OSS_KEY=${{ secrets.oss_key }} -e COMMIT_ID=${{ steps.vars.outputs.sha_short }} -e BRANCH=${{ steps.vars.outputs.branch }} -v $PWD:/opt/sources mixeway/scanner:latest
